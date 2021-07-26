@@ -11,6 +11,6 @@ dcc -o beats main.c beats.c
 
 
 When you run the program, enter '?' to trigger the explanation of how to
-run the program. 
+interact with the program. 
 
 Enjoy :)
