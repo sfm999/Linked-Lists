@@ -35,13 +35,13 @@ typedef struct beat *Beat;
 
 // Create a new Beat and return a pointer to it.
 //
-// The pointer is allocated memory to point to using malloc, 
+// The pointer is allocated memory to point to using malloc,
 // and it is the caller (the function that calls create_beat)'s
 // responsibility to free the memory (using remove_selected_beat -
 // a function you have to implement in Stage 3).
 //
 // This function has been implemented, though you may need to modify
-// it if you change the provided struct beat. 
+// it if you change the provided struct beat.
 Beat create_beat(void);
 
 ////////////////////////////////////////////////////////////////////////
@@ -52,14 +52,14 @@ Beat create_beat(void);
 // error code.
 //
 // New Notes are only allowed to be added to a Beat if:
-/// - They have a valid octave. 
-//    An octave is valid if it is a non-negative integer less than 10. 
+/// - They have a valid octave.
+//    An octave is valid if it is a non-negative integer less than 10.
 //    For example:
 //      - -1 is negative, so not a valid octave.
 //      - 10 is not less than 10, so not a valid octave.
 //      - 0, 1, ..., 8, 9 are all valid octaves.
-//  - They have a valid key. 
-//    A key is valid if it is a non-negative integer less than 12. 
+//  - They have a valid key.
+//    A key is valid if it is a non-negative integer less than 12.
 //    For example:
 //      - -1 is negative, so not a valid key.
 //      - 12 is not less than 12, so not a valid key.
@@ -85,14 +85,14 @@ Beat create_beat(void);
 // directly after the Note that was added the last time
 // `add_note_to_beat` was called.
 //
-// If a Note exists in the Beat already, you should not add it again. 
+// If a Note exists in the Beat already, you should not add it again.
 // For instance:
 // If a Beat contains the Note with octave 3 and key 11, you should
 // not add another Note with the same octave and key. You should return
 // `NOT_HIGHEST_NOTE`.
 //
 // Notes in a Beat should always be sorted in ascending order, first by
-// octave, then by key. 
+// octave, then by key.
 // For instance, "3 10" comes before "3 11" which comes before "4 0".
 //
 // `add_note_to_beat` will be passed:
@@ -167,7 +167,7 @@ void print_beat(Beat beat);
 //   will not be NULL.
 // - `octave`, an integer.
 //
-// `count_notes_in_octave` should return the number of notes in `beat` 
+// `count_notes_in_octave` should return the number of notes in `beat`
 // that match the same octave as `octave`.
 int count_notes_in_octave(Beat beat, int octave);
 
@@ -317,7 +317,7 @@ int count_beats_left_in_track(Track track);
 ////////////////////////////////////////////////////////////////////////
 // FREE BEAT
 
-// Call free on a Beat, and free all associated memory. You will need 
+// Call free on a Beat, and free all associated memory. You will need
 // to free the memory associated with the notes in the beat before
 // freeing the beat itself.
 //

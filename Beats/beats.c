@@ -18,41 +18,27 @@
 
 //////////////////////////////////////////////////////////////////////
 
-// You don't have to use the provided struct track, you are free to
-// make your own struct instead.
-// If you use the provided struct track, you will have to add fields
-// to store other information.
+typedef struct note *Note;
+
+struct note {
+    int octave;
+    int key;
+    Note next;
+};
+
+struct beat {
+    Note notes;
+    Beat next;
+};
 
 struct track {
     // TODO: You will have to add extra fields here in Stage 2.
-    struct beat *head;
+    Beat head;
+    Beat current;
 };
 
-// You don't have to use the provided struct beat, you are free to
-// make your own struct instead.
-// If you use the provided struct beat, you may add fields
-// to it to store other information.
-
-struct beat {
-    // You may choose to add or change fields in this struct.
-    struct note *notes;
-    struct beat *next;
-};
-
-// You don't have to use the provided struct note, you are free to
-// make your own struct instead.
-// If you use the provided struct note, you add fields
-// to it to store other information.
-
-struct note {
-    // You may choose to add or change fields in this struct.
-    int octave;
-    int key;
-    struct note *next;
-};
 
 // Add any other structs you define here.
-typedef struct note *Note;
 //////////////////////////////////////////////////////////////////////
 
 // Add prototypes for any extra functions you create here.
@@ -95,7 +81,7 @@ int add_note_to_beat(Beat beat, int octave, int key) {
 
     if(beat->notes == NULL) {
         beat->notes = insert_after(beat->notes, octave, key);
-    }else {
+    } else {
         Note curr = beat->notes;
         Note prev = NULL;
 
@@ -197,12 +183,23 @@ void print_beat(Beat beat) {
     Note curr = beat->notes;
     while(curr != NULL) {
         if(curr->next == NULL) {
-            printf(" %d %d", curr->octave, curr->key);
-        }else {
-            printf(" %d %d |", curr->octave, curr->key);
+            if(curr->key > 9) {
+                printf(" %d %d", curr->octave, curr->key);
+            } else {
+                printf(" %d 0%d", curr->octave, curr->key);
+            }
+
+        } else {
+            if(curr->key > 9) {
+                printf(" %d %d |", curr->octave, curr->key);
+            } else {
+                printf(" %d 0%d |", curr->octave, curr->key);
+            }
+
         }
         curr = curr->next;
     }
+    printf("\n");
     return;
 }
 
@@ -211,7 +208,7 @@ void print_beat(Beat beat) {
 int count_notes_in_octave(Beat beat, int octave) {
     if(octave < 0 || octave > 9) {
         return 0;
-    }else{
+    } else{
         Note curr = beat->notes;
         int count = 0;
         while(curr != NULL) {
@@ -230,29 +227,59 @@ int count_notes_in_octave(Beat beat, int octave) {
 
 // Return a malloced track with fields initialized.
 Track create_track(void) {
-    // Note: there is no fprintf in this function, as the
-    // Stage 1 autotests call create_track but expect it to return NULL
-    // (so this function should do nothing in Stage 1).
+    Track new_track = malloc(sizeof (struct track));
+    assert(new_track != NULL);
 
-    return NULL;
+    new_track->head = NULL;
+    new_track->current = NULL;
+
+    return new_track;
 }
 
 // Add a beat after the current beat in a track.
 void add_beat_to_track(Track track, Beat beat) {
-    printf("add_beat_to_track not implemented yet.\n");
-    return;
+
+    if(track->current != NULL) {
+        beat->next = track->current->next;
+        track->current->next = beat;
+    }else{
+        beat->next = track->head;
+        track->head = beat;
+    }
 }
 
 // Set a track's current beat to the next beat.
 int select_next_beat(Track track) {
-    printf("select_next_beat not implemented yet.\n");
+
+    if(track->current == NULL && track->head != NULL) {
+        track->current = track->head;
+        return TRACK_PLAYING;
+    }
+
+    if(track->current->next != NULL) {
+        track->current = track->current->next;
+        return TRACK_PLAYING;
+    }
+
+    track->current = NULL;
     return TRACK_STOPPED;
 }
 
 // Print the contents of a track.
 void print_track(Track track) {
-    printf("print_track not implemented yet.\n");
-    return;
+    Beat curr = track->head;
+    int beat_count = 1;
+    while(curr != NULL) {
+        if(curr == track->current) {
+            printf(">[%d] ", beat_count++);
+            print_beat(curr);
+            curr = curr->next;
+        }else{
+            printf(" [%d] ", beat_count++);
+            print_beat(curr);
+            curr = curr->next;
+        }
+    }
 }
 
 // Count beats after the current beat in a track.
