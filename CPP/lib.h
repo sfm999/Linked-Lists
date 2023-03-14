@@ -7,16 +7,6 @@
 
 #include <iostream>
 #include <cstdlib>
-#include <random>
-
-/* ------------------------------------------
-             'node' data structure
-   ----------------------------------------- */
-struct node
-{
-    int data;
-    struct node* next;
-};
 
 /* ------------------------------------------------
              Singly Linked List Functions
