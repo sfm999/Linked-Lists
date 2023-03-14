@@ -1,3 +1,5 @@
+An assignment in C, provided by my former student who studies at UNSW. Thank you, Izy.
+
 Use GCC compiler or the DCC compiler that UNSW created. Works with either.
 I haven't checked any other compilers.
 
