@@ -6,7 +6,14 @@
 
 #include "lib.h"
 
-// 
+/* ------------------------------------------
+             'node' data structure
+   ----------------------------------------- */
+struct node
+{
+    int data;
+    struct node* next;
+};
 
 void initNode(struct node** head, int val)
 {
