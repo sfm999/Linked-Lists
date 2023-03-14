@@ -11,7 +11,6 @@ I haven't used any libraries other than:
 ```
 #include <iostream>
 #include <cstdlib>
-#include <random>
 ```
 
 So, it should work with almost any compiler.
